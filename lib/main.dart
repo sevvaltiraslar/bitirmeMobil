@@ -48,6 +48,7 @@ class Sayfa extends StatelessWidget {
                 var mesaj = utf8.encode('baslat');
                 connection.output.add(mesaj);
                 connection.finish();
+                print("D");
               },
             ),
           ),
