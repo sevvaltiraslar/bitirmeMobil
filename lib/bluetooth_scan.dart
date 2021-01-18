@@ -22,8 +22,7 @@ class _BluetoothCihazSecimPageState extends State<BluetoothCihazSecimPage> {
   }
 
   Future<void> initBluetooth() async {
-    List<bs.BluetoothDevice> devTemp =
-        await bs.FlutterBluetoothSerial.instance.getBondedDevices();
+    List<bs.BluetoothDevice> devTemp = await bs.FlutterBluetoothSerial.instance.getBondedDevices();
     devTemp.forEach((element) {
       connDev.add(element);
     });
@@ -46,9 +45,14 @@ class _BluetoothCihazSecimPageState extends State<BluetoothCihazSecimPage> {
             subtitle: Text("${connDev.elementAt(index).address}"),
             onTap: () async {
               var device = connDev.elementAt(index);
-              Get.to(Sayfa(
-                adres: device.address,
-              ));
+              try{
+                bs.BluetoothConnection connection = await bs.BluetoothConnection.toAddress(device.address);
+                Get.to(Sayfa(connec: connection,));
+              }
+              catch(e){
+                Get.snackbar("Başarısız", "Bağlantı Başarısız",backgroundColor: Colors.red,colorText: Colors.white,snackPosition: SnackPosition.BOTTOM,duration: Duration(seconds: 2));
+                throw Exception(e);
+              }
             },
           ),
           itemCount: connDev.length,

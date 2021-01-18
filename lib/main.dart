@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bitirme/bluetooth_scan.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -14,8 +13,8 @@ void main() {
 }
 
 class Sayfa extends StatelessWidget {
-  Sayfa({this.adres});
-  String adres;
+  Sayfa({this.connec});
+  var connec;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +42,8 @@ class Sayfa extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
-                BluetoothConnection connection =
-                    await BluetoothConnection.toAddress(adres);
                 var mesaj = utf8.encode('baslat');
-                connection.output.add(mesaj);
-                connection.finish();
-                print("D");
+                connec.output.add(mesaj);
               },
             ),
           ),
@@ -62,11 +57,8 @@ class Sayfa extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
-                BluetoothConnection connection =
-                    await BluetoothConnection.toAddress(adres);
                 var mesaj = utf8.encode('durdur');
-                connection.output.add(mesaj);
-                connection.finish();
+                connec.output.add(mesaj);
               },
             ),
           ),
